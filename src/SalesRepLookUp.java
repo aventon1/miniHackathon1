@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class SalesRepLookUp {
     public static void main(String[] args) throws IOException {
@@ -13,42 +14,26 @@ public class SalesRepLookUp {
         String companiesFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\miniHackathon1\\Docs\\Company.csv";
 
         // get sales rep data
-        HashMap<String, SalesRep> salesReps = getSalesReps(salesRepFilePath);
+        HashMap<String, SalesRep> salesRepsData = getSalesReps(salesRepFilePath);
 
         // get company data
-        HashMap<String, ArrayList<Company>> companyData = getCompanies(companiesFilePath, salesReps);
+        HashMap<String, ArrayList<Company>> companyData = getCompanies(companiesFilePath, salesRepsData);
 
-        // add company data to
+        // get input from user
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Hello! Welcome to the sales representative lookup.");
+        System.out.println("In order to look up by sales rep, you must have the sales rep last name and date of birth.");
+        System.out.println();
+        System.out.println("Please enter sales rep last name: ");
+        String userInputLastName = sc.nextLine();
+        System.out.println("Please enter sales rep dob in this format YYYY-DD-DD: ");
+        String userInputDOB = sc.nextLine();
 
-        String userInputLastName = "Andrews";
-        String userInputDOB = "1953-12-21";
-        ArrayList<Company> employeeCompanyList;
+        // find company info based on user input
+        ArrayList<Company> employeeCompanyList = findCompanyList(salesRepsData, companyData, userInputLastName, userInputDOB);
 
-        // TODO: get user input, iterate through data structures to find company info
-        // CODE GOES HERE
-
-        for (Map.Entry<String, SalesRep> element: salesReps.entrySet()) {
-            String userID = element.getKey();
-            SalesRep rep = element.getValue();
-            String lastName = rep.getLastName();
-            String dob = rep.getDob();
-
-            if (lastName.equalsIgnoreCase(userInputLastName) && dob.equalsIgnoreCase(userInputDOB)) {
-                //salesRepId = userID;
-                //System.out.println(companyData.get(userID).getClass());
-                employeeCompanyList = companyData.get(userID);
-                for (Company comp : employeeCompanyList) {
-                    System.out.println(comp.getCompanyId() + " " + comp.getCompanyName() + " " + comp.getCountry() + " " + comp.getIndustry() + " " + comp.getNumEmployees());
-                }
-
-            }
-
-
-        }
-
-
-        // TODO: print company info to console
-        // CODE GOES HERE
+        // print company info to console
+        printCompanyInfo(employeeCompanyList);
 
     }
 
@@ -141,6 +126,40 @@ public class SalesRepLookUp {
         return companyData;
     }
 
+    public static ArrayList<Company> findCompanyList(HashMap<String, SalesRep> salesRepsData,
+                                                     HashMap<String, ArrayList<Company>> companyData,
+                                                     String userInputLastName, String userInputDOB) {
 
+        ArrayList<Company> employeeCompanyList = null;
 
+        for (Map.Entry<String, SalesRep> element: salesRepsData.entrySet()) {
+            String userID = element.getKey();
+            SalesRep rep = element.getValue();
+            String lastName = rep.getLastName();
+            String dob = rep.getDob();
+
+            if (lastName.equalsIgnoreCase(userInputLastName) && dob.equalsIgnoreCase(userInputDOB)) {
+                employeeCompanyList = companyData.get(userID);
+
+            }
+        }
+        return employeeCompanyList;
+    }
+
+    public static void printCompanyInfo(ArrayList<Company> employeeCompanyList) {
+
+        if (employeeCompanyList != null) {
+            System.out.println("Employee found!");
+            for (Company comp : employeeCompanyList) {
+                System.out.println("Organization Id: " + comp.getCompanyId());
+                System.out.println("Company Name: " + comp.getCompanyName());
+                System.out.println("Country: " + comp.getCountry());
+                System.out.println("Industry: " + comp.getIndustry());
+                System.out.println("Number of employees: " + comp.getNumEmployees());
+                System.out.println();
+            }
+        } else {
+            System.out.println("Employee not found.");
+        }
+    }
 }
