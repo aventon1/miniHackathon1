@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class SalesRepLookUp {
     public static void main(String[] args) throws IOException {
 
+        // TODO: remove hardcoded file paths
         String salesRepFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\miniHackathon1\\Docs\\SalesReps.csv";
         String companiesFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\miniHackathon1\\Docs\\Company.csv";
 
@@ -34,7 +35,6 @@ public class SalesRepLookUp {
 
         // print company info to console
         printCompanyInfo(employeeCompanyList);
-
     }
 
     public static HashMap<String, SalesRep> getSalesReps(String file) throws IOException {
