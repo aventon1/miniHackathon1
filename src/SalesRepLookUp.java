@@ -4,12 +4,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SalesRepLookUp {
     public static void main(String[] args) throws IOException {
 
-        String salesRepFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\Classwork\\src\\miniHackathon\\SalesReps.csv";
-        String companiesFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\Classwork\\src\\miniHackathon\\Company.csv";
+        String salesRepFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\miniHackathon1\\Docs\\SalesReps.csv";
+        String companiesFilePath = "C:\\Users\\AminaVenton\\IdeaProjects\\miniHackathon1\\Docs\\Company.csv";
 
         // get sales rep data
         HashMap<String, SalesRep> salesReps = getSalesReps(salesRepFilePath);
@@ -19,28 +20,32 @@ public class SalesRepLookUp {
 
         // add company data to
 
-        /*
+        String userInputLastName = "Andrews";
+        String userInputDOB = "1953-12-21";
+        ArrayList<Company> employeeCompanyList;
+
+        // TODO: get user input, iterate through data structures to find company info
+        // CODE GOES HERE
+
         for (Map.Entry<String, SalesRep> element: salesReps.entrySet()) {
             String userID = element.getKey();
             SalesRep rep = element.getValue();
             String lastName = rep.getLastName();
             String dob = rep.getDob();
-            System.out.println(userID + " " + rep.getLastName() + " " + dob);
 
-            for (Map.Entry<String, Company> element: companyData.entrySet()) {
-                String userID = element.getKey();
-                Company comp = element.getValue();
-                System.out.println(userID + " " + comp.getCompanyId() + " " + comp.getCountry() + " " + comp.getIndustry() + " " + comp.getNumEmployees());
+            if (lastName.equalsIgnoreCase(userInputLastName) && dob.equalsIgnoreCase(userInputDOB)) {
+                //salesRepId = userID;
+                //System.out.println(companyData.get(userID).getClass());
+                employeeCompanyList = companyData.get(userID);
+                for (Company comp : employeeCompanyList) {
+                    System.out.println(comp.getCompanyId() + " " + comp.getCompanyName() + " " + comp.getCountry() + " " + comp.getIndustry() + " " + comp.getNumEmployees());
+                }
+
             }
+
+
         }
-        */
 
-        String lastName = "Andrews";
-        String dob = "1953-12-21";
-
-
-        // TODO: get user input, iterate through data structures to find company info
-        // CODE GOES HERE
 
         // TODO: print company info to console
         // CODE GOES HERE
@@ -135,5 +140,7 @@ public class SalesRepLookUp {
 
         return companyData;
     }
+
+
 
 }
