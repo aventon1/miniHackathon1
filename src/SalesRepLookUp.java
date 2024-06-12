@@ -38,7 +38,7 @@ public class SalesRepLookUp {
     }
 
     public static HashMap<String, SalesRep> getSalesReps(String file) throws IOException {
-        // hashmap for to store employee data
+        // hashmap to store employee data
         HashMap<String, SalesRep> salesRepData = new HashMap();
 
         // read in sales rep file
@@ -50,17 +50,12 @@ public class SalesRepLookUp {
         while ((line = reader.readLine()) != null) {
             String[] data = line.split(",");
 
-            // User Id
+            // get sales rep fields
             String userID = data[0];
-            // First Name,
             String firstName = data[1];
-            // Last Name
             String lastName = data[2];
-            // Email,
             String email = data[3];
-            // Phone,
             String phoneNumber = data[4];
-            // Date of birth
             String dateOfBirth = data[5];
 
             // create salesRep object
@@ -85,24 +80,16 @@ public class SalesRepLookUp {
         while ((line1 = reader1.readLine()) != null) {
             String[] data = line1.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
-            // Ignore Index data[0]
-            // Organization Id,
+            // get company fields
+            // ignore Index data[0]
             String companyId = data[1];
-            // Sales RepId,
             String userId = data[2];
-            // Name,
             String companyName = data[3];
-            // Website,
             String website = data[4];
-            // Country,
             String country = data[5];
-            // Description,
             String description = data[6];
-            // Founded,
             String foundedDate = data[7];
-            // Industry,
             String industry = data[8];
-            // Number of employees
             String numOfEmployees = data[9];
 
             // make Company Object
