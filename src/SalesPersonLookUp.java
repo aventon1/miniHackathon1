@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class SalesRepLookUp {
+public class SalesPersonLookUp {
     public static void main(String[] args) throws IOException {
 
         String salesRepFilePath = "SalesReps.csv";
