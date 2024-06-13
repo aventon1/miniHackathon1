@@ -29,7 +29,7 @@ public class SalesPersonLookUp {
         System.out.println("Please enter sales rep dob in this format YYYY-DD-DD: ");
         String userInputDOB = sc.nextLine();
 
-        // find company info based on user input
+        // get company info based on user input
         ArrayList<Company> employeeCompanyList = findCompanyList(salesRepsData, companyData, userInputLastName, userInputDOB);
 
         // print company info to console
@@ -37,10 +37,9 @@ public class SalesPersonLookUp {
     }
 
     public static HashMap<String, SalesRep> getSalesReps(String file) throws IOException {
-        // hashmap to store employee data
+
         HashMap<String, SalesRep> salesRepData = new HashMap();
 
-        // read in sales rep file
         File salesRepFile = new File(file);
 
         BufferedReader reader = new BufferedReader(new FileReader(salesRepFile));
@@ -68,19 +67,19 @@ public class SalesPersonLookUp {
         return salesRepData;
     }
 
-    public static HashMap<String, ArrayList<Company>> getCompanies(String file, HashMap<String, SalesRep> salesReps) throws IOException {
+    public static HashMap<String, ArrayList<Company>> getCompanies(String file, HashMap<String,
+            SalesRep> salesReps) throws IOException {
+
         HashMap<String, ArrayList<Company>> companyData = new HashMap();
 
-        // read in company file
         File companyFile = new File(file);
 
-        BufferedReader reader1 = new BufferedReader(new FileReader(companyFile));
-        String line1 = "";
-        while ((line1 = reader1.readLine()) != null) {
-            String[] data = line1.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+        BufferedReader reader = new BufferedReader(new FileReader(companyFile));
+        String line = "";
+        while ((line = reader.readLine()) != null) {
+            String[] data = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
             // get company fields
-            // ignore Index data[0]
             String companyId = data[1];
             String userId = data[2];
             String companyName = data[3];
@@ -97,17 +96,15 @@ public class SalesPersonLookUp {
 
             // store in HashMap
             if (companyData.containsKey(userId)) {
-                // get list and add
                 ArrayList<Company> companyList = companyData.get(userId);
                 companyList.add(company);
             } else {
-                // add Company to a list
                 ArrayList<Company> companies = new ArrayList<Company>();
                 companies.add(company);
                 companyData.put(userId, companies);
             }
         }
-        reader1.close();
+        reader.close();
 
         return companyData;
     }
@@ -118,13 +115,14 @@ public class SalesPersonLookUp {
 
         ArrayList<Company> employeeCompanyList = null;
 
+        // find user input
         for (Map.Entry<String, SalesRep> element: salesRepsData.entrySet()) {
             String userID = element.getKey();
             SalesRep rep = element.getValue();
             String lastName = rep.getLastName();
             String dob = rep.getDob();
 
-            if (lastName.equalsIgnoreCase(userInputLastName) && dob.equalsIgnoreCase(userInputDOB)) {
+            if (lastName.equalsIgnoreCase(userInputLastName) && dob.equals(userInputDOB)) {
                 employeeCompanyList = companyData.get(userID);
 
             }
@@ -134,6 +132,7 @@ public class SalesPersonLookUp {
 
     public static void printCompanyInfo(ArrayList<Company> employeeCompanyList) {
 
+        // get company details and print
         if (employeeCompanyList != null) {
             System.out.println("Employee found!");
             for (Company comp : employeeCompanyList) {
