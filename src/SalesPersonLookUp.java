@@ -34,6 +34,7 @@ public class SalesPersonLookUp {
         String userInputLastName = sc.nextLine();
         System.out.println("Please enter sales rep dob in this format YYYY-DD-DD: ");
         String userInputDOB = sc.nextLine();
+        sc.close();
 
         // get company info based on user input
         ArrayList<Company> employeeCompanyList = findCompanyList(salesRepsData, companyData, userInputLastName, userInputDOB);
