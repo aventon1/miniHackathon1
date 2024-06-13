@@ -7,6 +7,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ *
+@author Amina Venton
+ *
+**/
+
 public class SalesPersonLookUp {
     public static void main(String[] args) throws IOException {
 
@@ -48,19 +54,11 @@ public class SalesPersonLookUp {
         while ((line = reader.readLine()) != null) {
             String[] data = line.split(",");
 
-            // get sales rep fields
-            String userID = data[0];
-            String firstName = data[1];
-            String lastName = data[2];
-            String email = data[3];
-            String phoneNumber = data[4];
-            String dateOfBirth = data[5];
-
             // create salesRep object
-            SalesRep salesRep = new SalesRep(userID, firstName, lastName, email, phoneNumber, dateOfBirth);
+            SalesRep salesRep = new SalesRep(data[0], data[1], data[2], data[3], data[4], data[5]);
 
             // store in HashMap
-            salesRepData.put(userID, salesRep);
+            salesRepData.put(data[0], salesRep);
         }
         reader.close();
 
@@ -79,29 +77,18 @@ public class SalesPersonLookUp {
         while ((line = reader.readLine()) != null) {
             String[] data = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
 
-            // get company fields
-            String companyId = data[1];
-            String userId = data[2];
-            String companyName = data[3];
-            String website = data[4];
-            String country = data[5];
-            String description = data[6];
-            String foundedDate = data[7];
-            String industry = data[8];
-            String numOfEmployees = data[9];
-
             // make Company Object
-            Company company = new Company(companyId, userId, companyName, website, country,
-                    description, foundedDate, industry, numOfEmployees);
+            Company company = new Company(data[1], data[2], data[3], data[4], data[5],
+                    data[6], data[7], data[8], data[9]);
 
             // store in HashMap
-            if (companyData.containsKey(userId)) {
-                ArrayList<Company> companyList = companyData.get(userId);
+            if (companyData.containsKey(data[2])) {
+                ArrayList<Company> companyList = companyData.get(data[2]);
                 companyList.add(company);
             } else {
                 ArrayList<Company> companies = new ArrayList<Company>();
                 companies.add(company);
-                companyData.put(userId, companies);
+                companyData.put(data[2], companies);
             }
         }
         reader.close();
@@ -117,14 +104,11 @@ public class SalesPersonLookUp {
 
         // find user input
         for (Map.Entry<String, SalesRep> element: salesRepsData.entrySet()) {
-            String userID = element.getKey();
-            SalesRep rep = element.getValue();
-            String lastName = rep.getLastName();
-            String dob = rep.getDob();
 
-            if (lastName.equalsIgnoreCase(userInputLastName) && dob.equals(userInputDOB)) {
-                employeeCompanyList = companyData.get(userID);
+            if (element.getValue().getLastName().equalsIgnoreCase(userInputLastName)
+                    && element.getValue().getDob().equals(userInputDOB)) {
 
+                employeeCompanyList = companyData.get(element.getKey());
             }
         }
         return employeeCompanyList;
